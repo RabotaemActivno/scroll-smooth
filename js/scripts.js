@@ -48,28 +48,32 @@ function scrollToElem(el){
 	
 }
 
-const scrollBtn = document.querySelector('.is-show-btn')
+let titleItems = document.querySelectorAll('a')
+let arrTitleItems = Array.from(titleItems).reverse()
+console.log(document.querySelector(`${arrTitleItems[0].hash}`));
+let heightMenu = document.querySelector('.menu').offsetHeight;
 
-function scrollToTop () {
-	window.scrollTo({top:0,left: 0,behavior: 'smooth'})
+function switcher () {
+	arrTitleItems.forEach(item => {
+		let selectItem = document.querySelector(`${item.hash}`).getBoundingClientRect().top + window.scrollY-heightMenu
+		console.log(selectItem);
+		// switch (item.hash) {
+		// 	case selectItem:
+		// 		addColor(titleItems[0]);
+		// 		break;
+		// 	case selectItem:
+		// 		addColor(titleItems[1]);
+		// 		break;
+		// 	case selectItem:
+		// 		addColor(titleItems[2]);
+		// 		break;
+		// 	case selectItem:
+		// 		addColor(titleItems[3]);
+		// 		break
+		// }
+	})
 }
-function showScrollBtn() {
-	scrollBtn.classList.remove('is-show-btn__hide')
-	scrollBtn.addEventListener('click', scrollToTop)
-}
-function hideScrollBtn() {
-	scrollBtn.classList.add('is-show-btn__hide')
-	scrollBtn.removeEventListener('click', scrollToTop)
-}
-window.addEventListener('scroll', () => {
-	if (window.scrollY > 500) {
-		showScrollBtn()
-	} else {
-		hideScrollBtn()
-	}
-
-})
-
+switcher()
 
 
 

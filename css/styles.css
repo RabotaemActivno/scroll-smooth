@@ -44,3 +44,6 @@ html, body{
     opacity: 0;
     cursor: auto;
 }
+.is-shown-btn{
+    display: none;
+}
