@@ -1,22 +1,47 @@
 window.addEventListener('load', function(){
 	let menu = document.querySelector('.menu');
+	let menuItems = menu.querySelectorAll('a');
+	let arrow = document.querySelector('.scrollUp')
 
 	delegate(menu, 'a', 'click', function(e){
 		e.preventDefault();
 
 		let target = document.querySelector(this.hash);
 		scrollToElem(target);
-		setActiveMenuItem(menu, this);
 	});
 
-	let hash = window.location.hash;
-	let autoTarget = hash.length > 0 ? document.querySelector(hash) : null;
+	arrow.addEventListener('click', function(){
+		window.scrollTo({
+			top:0,
+			left: 0,
+			behavior: "smooth"
+		})
+	})
 
-	if(autoTarget !== null){
-		scrollToElem(autoTarget);
-		setActiveMenuItem(menu, menu.querySelector(`[href$="${hash}"]`));
-	}
+	document.addEventListener('scroll', function(){
+		let pos = window.scrollY;
+		let threshold = window.innerHeight /2
+
+		if (window.scrollY > 500) {
+			arrow.classList.add('btnUp-open')
+		} else {
+			arrow.classList.remove('btnUp-open')
+		}
+		
+		for(let i =menuItems.length -1; i>=0;i--) {
+			let link = menuItems[i];
+			let header = document.querySelector(link.hash)
+			if (header.getBoundingClientRect().y<threshold) {
+				setActiveMenuItem(menu, link);
+				break
+			}
+		}
+
+	})
+
+	
 });
+
 
 function delegate(box, selector, eventName, handler){
 	box.addEventListener(eventName, function(e){
@@ -43,30 +68,11 @@ function scrollToElem(el){
 	window.scrollTo({
 		top,
 		behavior: "smooth"
-	});
-
-	
+	});	
 }
 
 
-const menuLinks = document.querySelectorAll('a');
-const heightMenu = document.querySelector('.menu').offsetHeight
-console.log(heightMenu);
 
-window.addEventListener('scroll', function() {
-  const scrollDistance = window.pageYOffset;
-  menuLinks.forEach(link => {
-    const section = document.querySelector(link.hash);
-    if (!section) return; // Если секция не найдена, то пропускаем итерацию
-    const sectionTop = section.offsetTop;
-    if (scrollDistance >= sectionTop - heightMenu*3) {
-      menuLinks.forEach(link => {
-        link.classList.remove('menu__link-active');
-      });
-      link.classList.add('menu__link-active');
-    }
-  });
-});
 
 
 // window.addEventListener('scroll', () => {

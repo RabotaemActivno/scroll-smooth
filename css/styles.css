@@ -28,22 +28,19 @@ html, body{
 .content{
    margin-top: 70px;
 }
-#scroll-top{
+.scrollUp{
     position: fixed;
     bottom: 150px;
     right: 70px;
     font-size: 40px;
     z-index: 999;
-}
-.is-show-btn{
-    opacity: 1;
-    transition: .5s;
     cursor: pointer;
-}
-.is-show-btn__hide{
     opacity: 0;
-    cursor: auto;
+    transition: opacity 0.5s;
+    pointer-events: none;
 }
-.is-shown-btn{
-    display: none;
+
+.btnUp-open{
+    opacity: 1;
+    pointer-events: all;
 }
